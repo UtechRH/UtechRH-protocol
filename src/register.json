@@ -1,0 +1,60 @@
+{
+  "schema": 1,
+  "project": { "name": "Utech", "domain": "Utech.codes" },
+  "records": {
+    "chain": {
+      "label": "Chain",
+      "state": "stated",
+      "value": {
+        "name": "Robinhood Chain",
+        "chainId": "0x1237",
+        "chainIdDecimal": 4663,
+        "rpc": "https://rpc.mainnet.chain.robinhood.com"
+      },
+      "source": "client statement",
+      "scope": "batch-level",
+      "stamp": "2026-11-12"
+    },
+    "ca": {
+      "label": "Token contract",
+      "state": "absent",
+      "source": "client statement",
+      "scope": "batch-level",
+      "stamp": "2026-11-12"
+    },
+    "x": {
+      "label": "X",
+      "state": "stated",
+      "url": "https://x.com/Utech",
+      "source": "client statement",
+      "scope": "batch-level",
+      "stamp": "2026-11-12"
+    },
+    "github": {
+      "label": "GitHub",
+      "state": "absent",
+      "source": "client statement",
+      "scope": "batch-level",
+      "stamp": "2026-11-12"
+    },
+    "market-source": {
+      "label": "Market feed",
+      "state": "stated",
+      "url": "https://api.geckoterminal.com/api/v2/networks/robinhood/trending_pools?include=base_token,quote_token&page=1",
+      "source": "client statement; network slug corrected from robinhood_chain, which the service answers with 404",
+      "scope": "batch-level",
+      "stamp": "2026-11-12"
+    },
+    "own-token-source": {
+      "label": "Own token feed",
+      "state": "stated",
+      "url": "https://api.dexscreener.com/latest/dex/tokens/{CA}",
+      "source": "client statement",
+      "scope": "batch-level",
+      "stamp": "2026-11-12"
+    },
+    "audit": { "label": "Outside audit", "state": "absent", "source": "client statement", "scope": "batch-level", "stamp": "2026-11-12" },
+    "docs": { "label": "Documentation", "state": "absent", "source": "client statement", "scope": "batch-level", "stamp": "2026-11-12" },
+    "console": { "label": "Console", "state": "absent", "source": "client statement", "scope": "batch-level", "stamp": "2026-11-12" }
+  }
+}

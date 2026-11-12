@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Utech</title>
+<meta name="description" content="Utech keeps a running record of self-running software so a crash becomes a pause. Live market board for Robinhood Chain.">
+<meta name="theme-color" content="#171925">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="apple-touch-icon" href="logo-192.png">
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="styles.css">
+<script>document.documentElement.className='js';</script>
+<script type="application/json" id="register">{"schema":1,"project":{"name":"Utech","domain":"Utech.codes"},"records":{"chain":{"label":"Chain","state":"stated","value":{"name":"Robinhood Chain","chainId":"0x1237","chainIdDecimal":4663,"rpc":"https://rpc.mainnet.chain.robinhood.com"},"source":"client statement","scope":"batch-level"},"ca":{"label":"Token contract","state":"absent","source":"client statement","scope":"batch-level"},"x":{"label":"X","state":"stated","url":"https://x.com/Utech","source":"client statement","scope":"batch-level"},"github":{"label":"GitHub","state":"absent","source":"client statement","scope":"batch-level"},"market-source":{"label":"Market feed","state":"stated","url":"https://api.geckoterminal.com/api/v2/networks/robinhood/trending_pools?include=base_token,quote_token&page=1","source":"client statement; network slug corrected from robinhood_chain, which the service answers with 404","scope":"batch-level"},"own-token-source":{"label":"Own token feed","state":"stated","url":"https://api.dexscreener.com/latest/dex/tokens/{CA}","source":"client statement","scope":"batch-level"},"audit":{"label":"Outside audit","state":"absent","source":"client statement","scope":"batch-level"},"docs":{"label":"Documentation","state":"absent","source":"client statement","scope":"batch-level"},"console":{"label":"Console","state":"absent","source":"client statement","scope":"batch-level"}}}</script>
+</head>
+<body>
+<div class="progress" id="progress" aria-hidden="true"></div>
+<div class="atmosphere" aria-hidden="true"></div>
+<a class="skip" href="#main">Jump past the header</a>
+
+<header class="site-header" id="top">
+  <div class="ca-bar" id="ca-bar">
+    <div class="ca-slot is-inert" data-ca-state="absent">
+        <span class="ca-label">Token contract</span>
+        <span class="ca-value">pending</span>
+        <button type="button" class="ca-copy" disabled aria-disabled="true" aria-label="Copy token contract, pending"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M5.75 1h6.5c.97 0 1.75.78 1.75 1.75v6.5A1.75 1.75 0 0 1 12.25 11h-6.5A1.75 1.75 0 0 1 4 9.25v-6.5C4 1.78 4.78 1 5.75 1Zm0 1.5a.25.25 0 0 0-.25.25v6.5c0 .14.11.25.25.25h6.5c.14 0 .25-.11.25-.25v-6.5a.25.25 0 0 0-.25-.25ZM2.75 5H3v1.5h-.25a.25.25 0 0 0-.25.25v6.5c0 .14.11.25.25.25h6.5a.25.25 0 0 0 .25-.25V13H10.5v.25A1.75 1.75 0 0 1 8.75 15h-6.5A1.75 1.75 0 0 1 .5 13.25v-6.5C.5 5.78 1.28 5 2.75 5Z"/></svg><span class="ca-copy-text">Copy</span></button>
+        <span class="ca-feedback" role="status" aria-live="polite"></span>
+      </div>
+  </div>
+  <nav class="nav" aria-label="Primary">
+    <a class="brand" href="#top" aria-label="Utech, back to top"><img src="logo-128.png" width="32" height="32" alt=""><span class="brand-name">UTECH</span></a>
+    <ul class="nav-links">
+      <li><a href="#market">Market</a></li>
+      <li><a href="#why">Why</a></li>
+      <li><a href="#flow">Flow</a></li>
+      <li><a href="#roadmap">Roadmap</a></li>
+      <li><a href="#status">Status</a></li>
+    </ul>
+    <div class="nav-right">
+      <details class="menu" id="menu">
+        <summary aria-label="Menu"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16"/></svg></summary>
+        <ul>
+          <li><a href="#market">Market</a></li>
+          <li><a href="#why">Why</a></li>
+          <li><a href="#flow">Flow</a></li>
+          <li><a href="#roadmap">Roadmap</a></li>
+          <li><a href="#status">Status</a></li>
+        </ul>
+      </details>
+      <div class="social" id="social" style="display:flex;gap:4px"><a class="icon-btn" href="https://x.com/Utech" target="_blank" rel="noopener noreferrer" data-social="x" aria-label="X, @Utech"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path fill="currentColor" d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a><span class="icon-btn is-inert" role="img" data-social="github" aria-disabled="true" aria-label="GitHub, pending"><svg viewBox="0 0 16 16" width="20" height="20" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"/></svg></span></div>
+    </div>
+  </nav>
+</header>
+
+<main id="main">
+  <section class="hero" aria-labelledby="h1">
+    <div class="mesh" aria-hidden="true"><i data-depth="-0.6"></i><i data-depth="0.8"></i><i data-depth="0.4"></i></div>
+    <div class="hero-line" aria-hidden="true"></div>
+    <div class="wrap hero-grid">
+      <div data-reveal>
+        <span class="pill"><span class="dot"></span>Robinhood Chain · 4663</span>
+        <p class="eyebrow" style="margin-top:24px;color:var(--color-accent)">Track. Confirm. Resume.</p>
+        <h1 id="h1">Pick a long job back up <span class="text-gradient">right where it stopped.</span></h1>
+        <p class="lead">Utech keeps a running record of what your self-running software has done, so a crash turns into a pause instead of a restart.</p>
+        <p class="fine">It brings back what was written down and flags what already left the building. It cannot pull back a transaction that has settled.</p>
+        <div class="cta">
+          <a class="btn btn-primary" href="#market">Watch the board</a>
+          <a class="btn" href="#flow">See the flow</a>
+        </div>
+        <p class="note">Prices below come from an open listing service and are shown as received.</p>
+        <ul class="facts">
+          <li><span class="fact-k">Network</span>Robinhood Chain 4663</li>
+          <li><span class="fact-k">Market feed</span>Public pool listings, polled every minute</li>
+          <li><span class="fact-k">Contract</span>pending</li>
+        </ul>
+      </div>
+      <div class="orbital-scene" id="orbital" aria-hidden="true" data-reveal>
+        <div class="orbital-glow" data-depth="0.3"></div>
+        <div class="orbital-floor"></div>
+        <div class="orbital-stage" id="orbital-stage">
+          <div class="orbital-plane" style="width:92%;height:92%;margin:-46% 0 0 -46%;transform:rotateX(68deg) rotateZ(-14deg);--tone:var(--palette-cyan)"><div class="orbital-ring"><div class="orbital-sweep"></div><span class="orbital-node" style="left:50%;top:0"></span><span class="orbital-node" style="left:100%;top:50%;animation-delay:.9s"></span><span class="orbital-node" style="left:14%;top:85%;animation-delay:1.8s"></span></div></div>
+          <div class="orbital-plane" style="width:70%;height:70%;margin:-35% 0 0 -35%;transform:rotateX(68deg) rotateZ(52deg);--tone:var(--palette-blue)"><div class="orbital-ring" style="animation-duration:32s;animation-direction:reverse"><div class="orbital-sweep"></div><span class="orbital-node" style="left:50%;top:0"></span><span class="orbital-node" style="left:0;top:50%;animation-delay:1.4s"></span></div></div>
+          <div class="orbital-plane" style="width:48%;height:48%;margin:-24% 0 0 -24%;transform:rotateX(68deg) rotateZ(118deg);--tone:var(--palette-violet-deep)"><div class="orbital-ring" style="animation-duration:26s"><div class="orbital-sweep"></div><span class="orbital-node" style="left:100%;top:50%"></span></div></div>
+          <div class="orbital-core" data-depth="0.5"><div class="core-rings"><i></i><i></i><i></i><b></b></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="market" aria-labelledby="market-h">
+    <div class="wrap">
+      <div class="market-head" data-reveal>
+        <div>
+          <p class="eyebrow">Market board</p>
+          <h2 id="market-h">Ten names on the move across Robinhood Chain.</h2>
+          <p class="sub">Our own line is pinned first. The other nine are the busiest pools by trading volume across a full day.</p>
+        </div>
+        <span class="pill" id="market-pill" role="status" aria-live="polite"><span class="dot is-off" id="market-dot"></span><span id="market-pill-text">Connecting</span></span>
+      </div>
+      <div class="ticker" id="ticker" aria-label="Scrolling prices" data-reveal><div class="ticker-track" id="ticker-track"><div class="ticker-set"><span class="tk-sk skeleton"></span><span class="tk-sk skeleton"></span><span class="tk-sk skeleton"></span><span class="tk-sk skeleton"></span><span class="tk-sk skeleton"></span><span class="tk-sk skeleton"></span><span class="tk-sk skeleton"></span><span class="tk-sk skeleton"></span></div><div class="ticker-set" aria-hidden="true"><span class="tk-sk skeleton"></span><span class="tk-sk skeleton"></span><span class="tk-sk skeleton"></span><span class="tk-sk skeleton"></span><span class="tk-sk skeleton"></span><span class="tk-sk skeleton"></span><span class="tk-sk skeleton"></span><span class="tk-sk skeleton"></span></div></div></div>
+      <div class="board glass" id="board" role="table" aria-label="Market board" data-reveal>
+        <div class="mrow m-head" role="row"><span role="columnheader">#</span><span role="columnheader">Token</span><span class="m-cell" role="columnheader">Price</span><span class="m-cell" role="columnheader">24h</span><span class="m-cell" role="columnheader">Volume</span><span class="m-cell m-liq" role="columnheader">Liquidity</span><span class="sr-only" role="columnheader">Copy</span></div>
+        <div id="own-slot" role="rowgroup"><div class="mrow own-row is-placeholder spot" data-own="absent" data-row="own" aria-disabled="true">
+        <span class="m-rank">1</span>
+        <span class="m-token"><img class="tile tile-logo" src="logo-128.png" width="36" height="36" alt="" decoding="async"><span class="m-names"><span class="m-sym">UTECH</span><span class="m-name">Utech</span></span></span>
+        <span class="m-cell m-price">· · · · ·</span>
+        <span class="m-cell m-chg">· · · · ·</span>
+        <span class="m-cell m-vol">· · · · ·</span>
+        <span class="m-cell m-liq">· · · · ·</span>
+        <span class="m-act"></span>
+      </div></div>
+        <div id="rows" role="rowgroup"></div>
+      </div>
+      <div class="market-foot"><span id="market-msg" role="status" aria-live="polite">Loading listings.</span><span>Copy buttons copy the symbol only.</span></div>
+    </div>
+  </section>
+
+  <section class="section alt" id="why" aria-labelledby="why-h">
+    <div class="wrap">
+      <p class="eyebrow" data-reveal>The gap</p>
+      <h2 id="why-h" data-reveal>Long jobs break halfway, right when value starts changing hands.</h2>
+      <div class="body"><ul class="grid g4">
+        <li data-reveal><div class="card spot"><span class="card-num">01</span><h3>A crash wipes the plan</h3><p>If a process dies on move fourteen, all of its intentions, working values and fetched data vanish with it. Starting over is the only option left.</p></div></li>
+        <li data-reveal><div class="card spot"><span class="card-num">02</span><h3>A retry can double a payment</h3><p>Say an order left a moment before the failure. Nobody can say if that order landed, and sending it again could pay twice.</p></div></li>
+        <li data-reveal><div class="card spot"><span class="card-num">03</span><h3>Notes nobody can vouch for</h3><p>Any stored snapshot is weak if no one can demonstrate that it matches what the process truly held.</p></div></li>
+        <li data-reveal><div class="card spot"><span class="card-num">04</span><h3>Language models never repeat themselves</h3><p>Putting the same question to a language model twice rarely yields the same answer, so resuming must lean on what was stored, never on asking afresh.</p></div></li>
+      </ul></div>
+    </div>
+  </section>
+
+  <section class="section" id="flow" aria-labelledby="flow-h">
+    <div class="wrap">
+      <p class="eyebrow" data-reveal>The flow</p>
+      <h2 id="flow-h" data-reveal>Three beats, repeated at every point that carries weight.</h2>
+      <div class="body" data-reveal>
+        <div class="glass tabs" id="tabs">
+          <div class="tablist" role="tablist" aria-label="The three beats">
+            <button class="tab" role="tab" id="t1" aria-controls="p1" aria-selected="true"><span class="n">01</span>Track</button>
+            <button class="tab" role="tab" id="t2" aria-controls="p2" aria-selected="false" tabindex="-1"><span class="n">02</span>Confirm</button>
+            <button class="tab" role="tab" id="t3" aria-controls="p3" aria-selected="false" tabindex="-1"><span class="n">03</span>Resume</button>
+          </div>
+          <div class="tabpanel lc-enter" role="tabpanel" id="p1" aria-labelledby="t1">
+            <div><h3>Write down where things stand</h3><ul class="bullets">
+              <li>Before and after every action that touches money, and every few moves in between, the run jots a compact snapshot of its own headway.</li>
+              <li>Each snapshot is sealed, tied to its slot in line, then fetched again to prove it was stored whole.</li>
+              <li>Only fingerprints and a pointer to the prior snapshot are meant to travel beyond the machine.</li></ul></div>
+            <div class="diagram"><svg viewBox="0 0 360 150" role="img" aria-label="A run writing snapshots along a line"><path class="dg-line" d="M20 75H340"/><path class="dg-flow" d="M20 75H340"/><g><circle class="dg-hot" cx="60" cy="75" r="14"/><circle class="dg-box" cx="140" cy="75" r="14"/><circle class="dg-hot" cx="220" cy="75" r="14"/><circle class="dg-box" cx="300" cy="75" r="14"/></g><text class="dg-text" x="60" y="112" text-anchor="middle">snap</text><text class="dg-text" x="140" y="112" text-anchor="middle">move</text><text class="dg-text" x="220" y="112" text-anchor="middle">snap</text><text class="dg-text" x="300" y="112" text-anchor="middle">move</text></svg></div>
+          </div>
+          <div class="tabpanel lc-enter" role="tabpanel" id="p2" aria-labelledby="t2" hidden>
+            <div><h3>Show that the snapshot is genuine</h3><ul class="bullets">
+              <li>Anyone holding a fingerprint can rebuild it from the saved bytes and compare the two.</li>
+              <li>A mismatch halts the resume rather than letting stale data slide through.</li>
+              <li>Orders still in flight are looked up at their source before a second attempt happens.</li></ul></div>
+            <div class="diagram"><svg viewBox="0 0 360 150" role="img" aria-label="Stored bytes compared with a fingerprint"><rect class="dg-box" x="30" y="30" width="110" height="36" rx="8"/><text class="dg-text" x="85" y="53" text-anchor="middle">stored bytes</text><rect class="dg-hot" x="220" y="30" width="110" height="36" rx="8"/><text class="dg-text" x="275" y="53" text-anchor="middle">fingerprint</text><path class="dg-flow" d="M85 66V100H275V66"/><circle class="dg-hot" cx="180" cy="100" r="14"/><text class="dg-text" x="180" y="135" text-anchor="middle">match</text></svg></div>
+          </div>
+          <div class="tabpanel lc-enter" role="tabpanel" id="p3" aria-labelledby="t3" hidden>
+            <div><h3>Continue from the newest proven point</h3><ul class="bullets">
+              <li>A process that boots again hunts for the newest snapshot that survives inspection.</li>
+              <li>It reloads that headway and asks each venue what became of orders in flight.</li>
+              <li>Work that already landed is skipped; the remainder carries on.</li></ul></div>
+            <div class="diagram"><svg viewBox="0 0 360 150" role="img" aria-label="A run that restarts from an earlier snapshot"><path class="dg-line" d="M20 50H340"/><circle class="dg-box" cx="70" cy="50" r="10"/><circle class="dg-hot" cx="150" cy="50" r="10"/><circle class="dg-box" cx="230" cy="50" r="10" style="stroke:var(--color-verify-fg)"/><path class="dg-flow" d="M230 62C230 110 150 110 150 62"/><text class="dg-text" x="150" y="30" text-anchor="middle">proven</text><text class="dg-text" x="230" y="30" text-anchor="middle">stalled</text><text class="dg-text" x="190" y="135" text-anchor="middle">pick up here</text></svg></div>
+          </div>
+          <p class="panel-foot">Sketches convey the concept. Nothing in them is a measurement.</p>
+        </div>
+        <ol class="steps">
+          <li><span class="n">01</span><h3>Observe</h3><p>At a chosen moment the run collects intended moves plus working values into one tidy bundle.</p></li>
+          <li><span class="n">02</span><h3>Seal</h3><p>The bundle is locked, tagged with its place in line, stored, then fetched again to be sure it survived.</p></li>
+          <li><span class="n">03</span><h3>Anchor</h3><p>A fingerprint of the bundle and a link to its predecessor are written to an open ledger that refuses entries arriving scrambled.</p></li>
+          <li><span class="n">04</span><h3>Resume</h3><p>When things break, the newest sound bundle is reloaded, open orders are looked up, and settled work is never repeated.</p></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt" id="walk" aria-labelledby="walk-h">
+    <div class="wrap">
+      <p class="eyebrow" data-reveal>Walkthrough</p>
+      <h2 id="walk-h" data-reveal>A job stalls at move 11 and picks up again from move 7.</h2>
+      <p class="sub" data-reveal>A scripted replay that plays out right here. Every step is invented.</p>
+      <div class="body" data-reveal>
+        <div class="glass demo">
+          <div class="demo-in">
+            <div class="demo-top"><span class="t1">Scripted replay</span><span class="t2" id="demo-beat">beat 1 of 19</span></div>
+            <div class="demo-body">
+              <ol class="moves" id="moves" aria-label="Moves in the scripted run"></ol>
+              <div class="readout" aria-live="polite">
+                <div><span>Marker at move 7</span><b id="rd-mark">not written</b></div>
+                <div><span>Order at move 9</span><b id="rd-order">not sent</b></div>
+                <div><span>Phase</span><b id="rd-phase">Running</b></div>
+              </div>
+              <ul class="phases" id="phases" aria-label="Phases"><li data-p="run">Running</li><li data-p="fail">Stalled</li><li data-p="find">Find marker</li><li data-p="load">Load and check</li><li data-p="recon">Look up orders</li><li data-p="done">Resumed</li></ul>
+              <div class="controls"><button type="button" id="d-pause">Pause</button><button type="button" id="d-back">Back</button><button type="button" id="d-fwd">Forward</button><button type="button" id="d-restart">Restart</button></div>
+            </div>
+            <p class="panel-foot">Invented data only. Resuming reloads logged headway; the trade from move 9 had gone through, so it is looked up and left alone.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="blueprint" aria-labelledby="bp-h">
+    <div class="wrap">
+      <p class="eyebrow" data-reveal>Blueprint</p>
+      <h2 id="bp-h" data-reveal>Ledger plus saved snapshots form the source of truth; whatever surrounds them can be swapped.</h2>
+      <p class="sub" data-reveal>With a node connection and the saved bundles in hand, anyone should be able to confirm a snapshot without trusting our servers.</p>
+      <div class="body layers">
+        <div class="layer spot" data-reveal><span class="n">1</span><h3>Your software <span class="chip">yours</span></h3><p>Whatever loop, bot or pipeline you already run.</p></div>
+        <div class="layer spot" data-reveal><span class="n">2</span><h3>Capture kit <span class="chip is-pending">pending</span></h3><p>Hooks that gather headway, lock it, and guard outside actions.</p></div>
+        <div class="layer core spot" data-reveal><span class="n">3</span><h3>Snapshot store <span class="chip is-pending">pending</span></h3><p>Sealed bundles kept in open storage and tested against their fingerprints on each read. Part of the source of truth.</p></div>
+        <div class="layer core spot" data-reveal><span class="n">4</span><h3>Anchor contract <span class="chip is-pending">pending</span></h3><p>Fingerprints, ordering rules and resume policy, housed within Robinhood Chain. Part of the source of truth.</p></div>
+        <div class="layer spot" data-reveal><span class="n">5</span><h3>Helper tools <span class="chip">extra</span></h3><p>Dashboards and alerts for comfort, never the final word.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt" id="figures" aria-labelledby="fig-h">
+    <div class="wrap">
+      <p class="eyebrow" data-reveal>Network figures</p>
+      <h2 id="fig-h" data-reveal>Counts show up here once there is something to count.</h2>
+      <p class="sub" data-reveal>These tiles will read straight from the ledger. Until one exists they stay empty on purpose.</p>
+      <div class="body tiles" data-reveal>
+        <div class="tile-stat"><p class="eyebrow">Runs enrolled</p><p class="v">pending</p></div>
+        <div class="tile-stat"><p class="eyebrow">Snapshots anchored</p><p class="v">pending</p></div>
+        <div class="tile-stat"><p class="eyebrow">Resumes completed</p><p class="v">pending</p></div>
+      </div>
+      <div class="rpc"><span class="fact-k">Node address</span><button type="button" class="rpc-copy" data-copy="https://rpc.mainnet.chain.robinhood.com" aria-label="Copy node address">https://rpc.mainnet.chain.robinhood.com<svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M5.75 1h6.5c.97 0 1.75.78 1.75 1.75v6.5A1.75 1.75 0 0 1 12.25 11h-6.5A1.75 1.75 0 0 1 4 9.25v-6.5C4 1.78 4.78 1 5.75 1Zm0 1.5a.25.25 0 0 0-.25.25v6.5c0 .14.11.25.25.25h6.5c.14 0 .25-.11.25-.25v-6.5a.25.25 0 0 0-.25-.25ZM2.75 5H3v1.5h-.25a.25.25 0 0 0-.25.25v6.5c0 .14.11.25.25.25h6.5a.25.25 0 0 0 .25-.25V13H10.5v.25A1.75 1.75 0 0 1 8.75 15h-6.5A1.75 1.75 0 0 1 .5 13.25v-6.5C.5 5.78 1.28 5 2.75 5Z"/></svg></button></div>
+    </div>
+  </section>
+
+  <section class="section" id="roadmap" aria-labelledby="rm-h">
+    <div class="wrap">
+      <p class="eyebrow" data-reveal>Roadmap</p>
+      <h2 id="rm-h" data-reveal>Four phases, each opened only after the previous one holds.</h2>
+      <div class="body"><ol class="grid g4">
+        <li data-reveal class="rm"><div class="card spot"><span class="phase-tag"><span>Phase 1</span><span class="chip is-live">underway</span></span><h3>Foundation</h3><p>Brand, the website, the market board and an open channel on X.</p></div></li>
+        <li data-reveal class="rm"><div class="card spot"><span class="phase-tag"><span>Phase 2</span><span class="chip is-pending">pending</span></span><h3>Capture</h3><p>A first capture kit that only logs headway for your own runs.</p></div></li>
+        <li data-reveal class="rm"><div class="card spot"><span class="phase-tag"><span>Phase 3</span><span class="chip is-pending">pending</span></span><h3>Anchor</h3><p>The ledger is released to Robinhood Chain; its address then appears in the bar above.</p></div></li>
+        <li data-reveal class="rm"><div class="card spot"><span class="phase-tag"><span>Phase 4</span><span class="chip is-pending">pending</span></span><h3>Reach</h3><p>Hooks for popular toolkits, open source and an outside audit.</p></div></li>
+      </ol></div>
+    </div>
+  </section>
+
+  <section class="section alt" id="limits" aria-labelledby="lim-h">
+    <div class="wrap">
+      <p class="eyebrow" data-reveal>Limits</p>
+      <h2 id="lim-h" data-reveal>What this will never claim to do.</h2>
+      <div class="body"><ul class="grid g4">
+        <li data-reveal><div class="card spot"><span class="card-num">limit</span><h3>Settled trades stay settled</h3><p>Wallet holdings, third-party programs and earlier transfers remain exactly as they were once a job resumes.</p></div></li>
+        <li data-reveal><div class="card spot"><span class="card-num">limit</span><h3>Reasoning quality is unproven</h3><p>A matching fingerprint shows what was logged, not that the software reasoned well.</p></div></li>
+        <li data-reveal><div class="card spot"><span class="card-num">limit</span><h3>Reachability is not promised</h3><p>Saved bundles sit in open storage whose uptime we watch yet can't promise.</p></div></li>
+        <li data-reveal><div class="card spot"><span class="card-num">limit</span><h3>Key holders carry the trust</h3><p>Whoever holds the signing keys sets the rules. Spread that control across several people.</p></div></li>
+      </ul></div>
+    </div>
+  </section>
+
+  <section class="section" id="status" aria-labelledby="st-h">
+    <div class="wrap">
+      <p class="eyebrow" data-reveal>Status</p>
+      <h2 id="st-h" data-reveal>Where things stand.</h2>
+      <p class="sub" data-reveal>All that is described above is a plan until its row below says otherwise.</p>
+      <ul class="body status-list" data-reveal>
+        <li class="status-row spot" data-record="chain"><span class="status-label">Network</span><span class="chip is-live">Robinhood Chain · 4663 · 0x1237</span></li>
+<li class="status-row spot" data-record="ca"><span class="status-label">Token contract</span><span class="chip is-pending">pending</span></li>
+<li class="status-row spot" data-record="x"><span class="status-label">X</span><a class="chip is-live is-link" href="https://x.com/Utech" target="_blank" rel="noopener noreferrer">@Utech</a></li>
+<li class="status-row spot" data-record="github"><span class="status-label">GitHub</span><span class="chip is-pending">pending</span></li>
+<li class="status-row spot" data-record="docs"><span class="status-label">Documentation</span><span class="chip is-pending">pending</span></li>
+<li class="status-row spot" data-record="console"><span class="status-label">Console</span><span class="chip is-pending">pending</span></li>
+<li class="status-row spot" data-record="audit"><span class="status-label">Outside audit</span><span class="chip is-pending">pending</span></li>
+<li class="status-row spot" data-record="market-source"><span class="status-label">Market feed</span><span class="chip is-live">flowing</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section alt" id="explore" aria-labelledby="ex-h">
+    <div class="wrap">
+      <p class="eyebrow" data-reveal>Explore</p>
+      <h2 id="ex-h" data-reveal>Dig into specifics prior to leaning on them.</h2>
+      <div class="body"><ul class="grid g3">
+        <li data-reveal><a class="card spot link-card" href="#limits"><h3>Limits <span class="arrow">→</span></h3><p>Plain statements about what Utech cannot do.</p></a></li>
+        <li data-reveal><a class="card spot link-card" href="#roadmap"><h3>Roadmap <span class="arrow">→</span></h3><p>Four phases and where each one stands.</p></a></li>
+        <li data-reveal><a class="card spot link-card" href="#status"><h3>Status <span class="arrow">→</span></h3><p>Every outside fact, marked live or pending.</p></a></li>
+      </ul></div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="foot-brand"><img src="logo-128.png" width="28" height="28" alt=""><strong>Utech</strong></div>
+    <p class="foot-tag">Track. Confirm. Resume.</p>
+    <p class="foot-small">Robinhood Chain · 4663. Utech.codes. This page offers no investment guidance. Token figures come from public listings and are displayed as received, so check them yourself before acting on them.</p>
+  </div>
+</footer>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>

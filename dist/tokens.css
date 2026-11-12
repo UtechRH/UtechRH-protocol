@@ -1,0 +1,18 @@
+/* Single home for colour literals. Nothing else in the repo may carry a hex value.
+   Provenance: k-means (k=6, every 37th pixel, seed 1) over the logo files in brand/,
+   each centroid snapped to the nearest REAL pixel; "px:(x,y)" is that pixel's coordinate.
+   The two extremes (cyan, deep violet) are the real pixels maximising hue distance on the opaque chevrons. */
+:root {
+  /* src:brand/LOGO UTECH PNG.png px:(0,0) cluster 94577 of 108k samples: page ground */
+  --palette-ground: #171925;
+  /* src:brand/LOGO UTECH PNG...png px:(1256,809) k-means cluster, the U body */
+  --palette-paper: #e5e7f2;
+  /* src:brand/LOGO UTECH PNG...png px:(726,531) extreme sample, chevron top-left */
+  --palette-cyan: #01bffd;
+  /* src:brand/LOGO UTECH PNG.png px:(1333,588) k-means cluster, chevron mid-gradient */
+  --palette-blue: #3b70fd;
+  /* src:brand/LOGO UTECH PNG...png px:(1394,650) k-means cluster, chevron lower-right */
+  --palette-violet: #631efc;
+  /* src:brand/LOGO UTECH PNG...png px:(1404,789) extreme sample, chevron bottom-right */
+  --palette-violet-deep: #8705fe;
+}

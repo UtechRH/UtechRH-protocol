@@ -1,0 +1,14 @@
+{
+  "name": "utech",
+  "version": "0.1.0",
+  "description": "Utech: keep autonomous software resumable. Live market board for Robinhood Chain.",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "gates": "node scripts/gates.mjs",
+    "preview": "node scripts/serve.mjs"
+  }
+}
